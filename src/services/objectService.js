@@ -42,7 +42,9 @@ objectService.getKey = function(request,response) {
                 if(data[0]){
                     return commonUtil.sendResponse(response, httpStatus.OK, data[0]);
                 }else{
-                    return commonUtil.sendResponse(response, httpStatus.OK, {});
+                    // If data is not there, check the DB with only 'Key'. If 'data' is not there, put as 404.
+                    logger.msg('INFO', 'objectService', '', '', 'getKey', 'Data is not present in DB ');
+                    return objectService.isPageNotFound(request, response);
                 }
             } else {
                 logger.msg('ERROR', 'objectService', '', '', 'getKey', 'Undefined error in getKey - ' + err.stack);
@@ -50,6 +52,33 @@ objectService.getKey = function(request,response) {
             }
         }, function (err) {
             logger.msg('ERROR', 'objectService', '', '', 'getKey', 'Undefined error in getKey - ' + err.stack);
+            return commonUtil.sendResponseWoBody(response, httpStatus.INTERNAL_SERVER_ERROR);
+        });
+};
+
+/*
+ Used to differentiate whether the response code is 404 or 200
+ */
+objectService.isPageNotFound = function(request,response) {
+    logger.msg('INFO', 'objectService', '', '', 'isPageNotFound', 'start of isPageNotFound');
+    var  key= request.params.key;
+    return objectModel.getEntity(key,'')
+        .then(function(data){
+            if(data){
+                if(data[0]){
+                    // Data is there only with key as search criteria. so we can't say as 404. It has to be 200
+                    return commonUtil.sendResponse(response, httpStatus.OK, {});
+                }else{
+                    // 'data' is not there, put as 404.
+                    logger.msg('INFO', 'objectService', '', '', 'isPageNotFound', 'Data is not present from deciding method ');
+                    return commonUtil.sendResponseWoBody(response, httpStatus.NOT_FOUND);
+                }
+            } else {
+                logger.msg('ERROR', 'objectService', '', '', 'isPageNotFound', 'Undefined error in isPageNotFound - ' + err.stack);
+                return commonUtil.sendResponseWoBody(response, httpStatus.INTERNAL_SERVER_ERROR);
+            }
+        }, function (err) {
+            logger.msg('ERROR', 'objectService', '', '', 'isPageNotFound', 'Undefined error in isPageNotFound - ' + err.stack);
             return commonUtil.sendResponseWoBody(response, httpStatus.INTERNAL_SERVER_ERROR);
         });
 };

@@ -22,6 +22,8 @@ CommonUtil.sendResponse = function (res, httpCode, renderingContent) {
 
 };
 
+
+
 CommonUtil.sendResponseWoBody = function (res, httpCode) {
     res.status(httpCode);
     res.end();
