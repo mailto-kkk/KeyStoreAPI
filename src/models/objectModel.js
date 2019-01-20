@@ -53,6 +53,7 @@ objectModel.getEntity = function (key,timestamp) {
         sqlData.push(timestamp);
         tableMainQuery   = "SELECT VALUE FROM ENTITY WHERE KEY1=? AND CREATED_TIME_UTC <= ? ORDER BY CREATED_TIME_UTC DESC LIMIT 1 ";
     }
+    logger.msg('INFO', 'objectModel', '', '', 'getEntity', 'tableMainQuery is '+tableMainQuery);
     DBUtil.getConnection(function (err, dbConn) {
         if (err) {
             logger.msg('ERROR', 'objectModel', '', '', 'getEntity', 'Error during getConnection :: err - ' + err.stack);

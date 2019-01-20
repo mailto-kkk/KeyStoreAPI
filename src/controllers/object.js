@@ -31,8 +31,15 @@ module.exports = function (router) {
 
     //Get Object
     router.get("/:key", function (req, res) {
-        
-        objectService.getKey(req, res);
+        var  timestamp= req.query.timestamp;
+        if(timestamp && timestamp.length!==10  ){
+            // If timestamp is there, it has to be exactly 10 digits.
+            logger.msg('INFO', 'v1', '', '', 'GET ', 'Timestamp is not having 10 digits ');
+            commonUtil.sendResponseWoBody(res, httpStatus.BAD_REQUEST);
+        }else{
+            objectService.getKey(req, res);
+        }
+
     });
 
 
