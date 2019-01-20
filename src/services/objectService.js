@@ -19,7 +19,7 @@ objectService.createKey = function(request,response) {
      return objectModel.insertEntity(key,value)
         .then(function(insertedData){
             if(insertedData){
-                return commonUtil.sendResponse(response, httpStatus.OK, insertedData);
+                return commonUtil.sendResponse(response, httpStatus.CREATED, insertedData);
             } else {
                 logger.msg('ERROR', 'objectService', '', '', 'createKey', 'Undefined error in createKey - ' + err.stack);
                 return commonUtil.sendResponseWoBody(response, httpStatus.INTERNAL_SERVER_ERROR);

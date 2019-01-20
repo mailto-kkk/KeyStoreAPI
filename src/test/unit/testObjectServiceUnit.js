@@ -51,7 +51,7 @@ describe('objectService::Object Service TestSuite', () => {
 			
             let response = {
                 'Content-Type': 'application/json; charset=utf-8',
-                'Status': httpStatus.OK,
+                'Status': httpStatus.CREATED,
 				'body': returnEntities
             };
 
@@ -62,7 +62,7 @@ describe('objectService::Object Service TestSuite', () => {
 			
 			let expectedVal = {
                 'Content-Type': 'application/json; charset=utf-8',
-                'Status': httpStatus.OK,
+                'Status': httpStatus.CREATED,
 				'body': returnEntities
             };
 			

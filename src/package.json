@@ -15,7 +15,7 @@
         "coverageRpt": "./node_modules/.bin/istanbul report cobertura --root coverage --dir coverage",
         "jutest": "./node_modules/.bin/mocha \"test/unit/\" --reporter mocha-junit-reporter --timeout 30000",
         "integTest": "./node_modules/.bin/mocha test --timeout 15000",
-        "integrationTest": "node test/integration/newmanTestSuite.js"
+        "integrationTest": "grunt integrationTest"
     },
     "engines": {
         "node": "10.15.0"
