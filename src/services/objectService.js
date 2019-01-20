@@ -38,6 +38,7 @@ objectService.getKey = function(request,response) {
     var  key= request.params.key;
     return objectModel.getEntity(key,timestamp)
         .then(function(data){
+            //console.log("data in the getKey response is "+JSON.stringify(data));
             if(data){
                 if(data[0]){
                     return commonUtil.sendResponse(response, httpStatus.OK, data[0]);
@@ -64,6 +65,7 @@ objectService.isPageNotFound = function(request,response) {
     var  key= request.params.key;
     return objectModel.getEntity(key,'')
         .then(function(data){
+            //console.log("data in the isPageNotFound response is "+JSON.stringify(data));
             if(data){
                 if(data[0]){
                     // Data is there only with key as search criteria. so we can't say as 404. It has to be 200
@@ -75,6 +77,7 @@ objectService.isPageNotFound = function(request,response) {
                 }
             } else {
                 logger.msg('ERROR', 'objectService', '', '', 'isPageNotFound', 'Undefined error in isPageNotFound - ' + err.stack);
+                console.log("Undefined error in isPageNotFound");
                 return commonUtil.sendResponseWoBody(response, httpStatus.INTERNAL_SERVER_ERROR);
             }
         }, function (err) {
